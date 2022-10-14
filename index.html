@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input product number</title>
+    <style>
+         :root {
+            --bg-color: #cde0ef;
+            --bg2-color: #b0c7d8;
+            --accent-color: #31536c;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        .container {
+            background-color: var(--bg-color);
+            max-width: 200px;
+            margin: 0 auto;
+            padding: 10px;
+            color: var(--accent-color);
+        }
+        
+        a {
+            text-decoration: none;
+            color: var(--accent-color);
+        }
+        
+        #product {
+            width: 100%;
+            height: 30px;
+            border-radius: 5px;
+            border-width: 0;
+            text-align: center;
+            margin-top: 5px;
+        }
+        
+        #product:focus {
+            outline: 0;
+        }
+        
+        button {
+            width: 100%;
+            height: 40px;
+            color: var(--accent-color);
+            background-color: var(--bg2-color);
+            border-radius: 5px;
+            border-width: 0;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 2px;
+        }
+        
+        fieldset {
+            padding: 0;
+            border-width: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="mainContainer" class="container">
+        Product number:<br>
+        <input id="product" type="text" onchange="onChange()">
+        <button id="openTabsButton" onclick="openTabs()">Open tabs</button>
+        <hr>
+        <fieldset>
+            <div>
+                <input type="checkbox" id="ssactivewearCheck" name="ssactivewear" checked>
+                <label for="ssactivewear"><a id="ssactivewearA" href="" target="_blank">ssactivewear.com</a></label>
+            </div>
+            <div>
+                <input type="checkbox" id="alphabroderCheck" name="alphabroder" checked>
+                <label for="alphabroder"><a id="alphabroderA" href="" target="_blank">alphabroder.com</a></label>
+            </div>
+            <div>
+                <input type="checkbox" id="sanmarCheck" name="sanmar" checked>
+                <label for="sanmar"><a id="sanmarA" href="" target="_blank">sanmar.com</a></label>
+            </div>
+        </fieldset>
+    </div>
+
+    <div id="loginContainer" class="container">
+        <b>Please log in:</b><br><br> login:
+        <input id="login" type="text"> password:
+        <input id="password" type="text">
+        <button id="login" onclick="login()">Log in</button>
+    </div>
+</body>
+
+<script>
+    const validTokens = [
+        1588670540, -854859360, -1804980054,
+        887730984, -238999494, -634885283, -1481257013, -1551764717, -861667534,
+        1105864869,
+        475147681,
+        1545160891,
+    ]
+
+    String.prototype.hashCode = function() {
+        var hash = 0,
+            i, chr
+        if (this.length === 0) return hash
+        for (i = 0; i < this.length; i++) {
+            chr = this.charCodeAt(i)
+            hash = ((hash << 5) - hash) + chr
+            hash |= 0 // Convert to 32bit integer
+        }
+        return hash
+    }
+
+    function updatePermissions() {
+        let keypass = localStorage.getItem('keypass')
+        if (keypass == null) {
+            keypass = ''
+        }
+        let usersToken = keypass.hashCode()
+        let mainContainer = document.getElementById('mainContainer')
+        let loginContainer = document.getElementById('loginContainer')
+        if (validTokens.includes(usersToken)) {
+            mainContainer.style.display = "block"
+            loginContainer.style.display = "none"
+        } else {
+            mainContainer.style.display = "none"
+            loginContainer.style.display = "block"
+        }
+    }
+
+    function login() {
+        let login = document.getElementById('login').value
+        let password = document.getElementById('password').value
+        let keypass = `${login} / ${password}`
+        let usersToken = keypass.hashCode()
+        if (validTokens.includes(usersToken)) {
+            localStorage.setItem('keypass', keypass)
+            updatePermissions()
+        }
+    }
+
+    updatePermissions()
+</script>
+
+<script>
+    let isPopupCheck = window.location.hash.substr(2) == 'state=popupCheck'
+    if (!isPopupCheck) {
+        setTimeout(function() {
+            var newWin = window.open('#?state=popupCheck')
+
+            if (!newWin || newWin.closed || typeof newWin.closed == 'undefined') {
+                alert('Please allow popups')
+            }
+        }, 300)
+    } else {
+        close()
+    }
+</script>
+
+<script>
+    document.getElementById('product').addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            document.getElementById("openTabsButton").click();
+        }
+    })
+
+    function onChange() {
+        let productValue = document.getElementById('product').value
+        if (productValue == '') {
+            return
+        }
+        document.getElementById('ssactivewearA').href = 'https://www.ssactivewear.com/ps/?q=' + productValue
+        document.getElementById('alphabroderA').href = 'https://www.alphabroder.com/cgi-bin/livewamus/wam_tmpl/catalog_browse.p?site=ABLive&layout=Responsive&page=catalog_browse&searchText=' + productValue
+        document.getElementById('sanmarA').href = 'https://www.sanmar.com/search/?text=' + productValue
+    }
+
+    function openTabs() {
+        onChange()
+        let productValue = document.getElementById('product').value
+        if (productValue == '') {
+            return
+        }
+        if (document.getElementById('ssactivewearCheck').checked) {
+            window.open(document.getElementById('ssactivewearA').href, "_blank")
+        }
+        if (document.getElementById('alphabroderCheck').checked) {
+            window.open(document.getElementById('alphabroderA').href, "_blank")
+        }
+        if (document.getElementById('sanmarCheck').checked) {
+            window.open(document.getElementById('sanmarA').href, "_blank")
+        }
+    }
+</script>
+
+</html>
