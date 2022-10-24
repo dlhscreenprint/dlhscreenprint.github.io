@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arial">
     <title>Input product number</title>
     <style>
          :root {
@@ -15,6 +16,7 @@
         
         * {
             box-sizing: border-box;
+            font-family: "Arial";
         }
         
         .container {
@@ -59,12 +61,24 @@
             padding: 0;
             border-width: 0;
         }
+        
+        .little-centered {
+            font-size: 12px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        #logo {
+            height: 150px;
+            margin: 0 15px;
+        }
     </style>
 </head>
 
 <body>
     <div id="mainContainer" class="container">
-        Product number OR Keyword:<br>
+
+        <div class="little-centered">Product number OR Keyword:</div>
         <input id="product" type="text" onchange="onChange()">
         <button id="openTabsButton" onclick="openTabs()">Open tabs</button>
         <hr>
@@ -82,12 +96,15 @@
                 <label for="sanmar"><a id="sanmarA" href="" target="_blank">sanmar.com</a></label>
             </div>
         </fieldset>
+        <hr>
+        <div class="little-centered">Powered by:</div><br>
+        <img id="logo" src="/assets/DLH ROUND BADGE.png" alt="Logo">
     </div>
 
     <div id="loginContainer" class="container">
         <b>Please log in:</b><br><br> login:
         <input id="login" type="text"> password:
-        <input id="password" type="text">
+        <input id="password" type="password">
         <button id="login" onclick="login()">Log in</button>
     </div>
 </body>
