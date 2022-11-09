@@ -103,19 +103,20 @@
 
     <div id="loginContainer" class="container">
         <b>Please log in:</b><br><br> login:
-        <input id="login" type="text"> password:
-        <input id="password" type="password">
+        <input id="login" type="text" onkeydown="login()"> password:
+        <input id="password" type="password" onkeydown="login()">
         <button id="login" onclick="login()">Log in</button>
     </div>
 </body>
 
 <script>
     const validTokens = [
-        1588670540, -854859360, -1804980054,
+        1588670540, -854859360, -1804980054, 1105864869, 475147681, 1545160891,
         887730984, -238999494, -634885283, -1481257013, -1551764717, -861667534,
-        1105864869,
-        475147681,
-        1545160891,
+        235712539, -1613262431, -2056674995, 373755026, -560584616, 1114031937,
+        2074867269, 43753582, -1792050566, 823583878, -876859762, 1115730195,
+        2106581649, -1767009571, -187392437, 740975126, -1315995661, 243350853,
+        858174126,
     ]
 
     String.prototype.hashCode = function() {
@@ -157,6 +158,8 @@
             updatePermissions()
         }
     }
+
+    console.log('Shirt / Search1'.hashCode())
 
     updatePermissions()
 </script>
